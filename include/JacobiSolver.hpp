@@ -6,14 +6,14 @@
 
 class JacobiSolver {
 private:
-    MPIGrid& grid_;
-    std::function<double(double, double)> forcing_term_;
-    double tolerance_;
-    int max_iterations_;
-    int rank_;
-    int size_;
+    MPIGrid& grid;
+    std::function<double(double, double)> forcing_term;
 
 public:
+    double tolerance;
+    int max_iterations;
+    
+    // Constructor
     JacobiSolver(MPIGrid& grid, 
                  std::function<double(double, double)> f,
                  double tol, 
