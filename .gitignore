@@ -1,6 +1,10 @@
 *.vtk
 *.prof
 
+# Executables
+jacobi_solver
+jacobi_serial
+
 # Prerequisites
 *.d
 
@@ -25,7 +29,6 @@
 *.dylib
 *.dll
 *.so.*
-
 
 # Fortran module files
 *.mod
