@@ -4,10 +4,12 @@
 #include "MPIGrid.hpp"
 #include <functional>
 
+using Function = std::function<double(double, double)>;
+
 class JacobiSolver {
 private:
     MPIGrid& grid;
-    std::function<double(double, double)> forcing_term;
+    Function forcing_term;
 
 public:
     double tolerance;
@@ -15,7 +17,7 @@ public:
     
     // Constructor
     JacobiSolver(MPIGrid& grid, 
-                 std::function<double(double, double)> f,
+                 Function f,
                  double tol, 
                  int max_iter,
                  int rank,
@@ -25,7 +27,6 @@ public:
     double compute_local_error() const;
     bool check_global_convergence(double local_error, int iteration);
     int solve();
-    
     double compute_l2_error(std::function<double(double, double)> exact_solution) const;
 };
 
