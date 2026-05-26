@@ -17,7 +17,7 @@ public:
     std::vector<double> u_local;    // Local solution (includes ghost rows)
     std::vector<double> u_new;      // New solution for iteration
     
-    double h_;                       // Mesh spacing
+    double h;                       // Mesh spacing
     // Constructor
     MPIGrid(int n, int rank, int size);
     

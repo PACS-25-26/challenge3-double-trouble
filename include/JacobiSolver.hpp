@@ -19,9 +19,7 @@ public:
     JacobiSolver(MPIGrid& grid, 
                  Function f,
                  double tol, 
-                 int max_iter,
-                 int rank,
-                 int size);
+                 int max_iter);
     
     void iterate();
     double compute_local_error() const;

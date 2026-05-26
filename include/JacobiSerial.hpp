@@ -22,10 +22,7 @@ class JacobiSerial {
         double h;
 
         // Constructor
-        JacobiSerial(int n,
-                    Function f,
-                    double tol,
-                    int max_iter);
+        JacobiSerial(Function f, double tol, int max_iter, int n);
 
         void iterate();
         double compute_error() const;

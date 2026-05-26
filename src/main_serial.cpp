@@ -1,5 +1,4 @@
 #include "JacobiSerial.hpp"
-#include "VTKWriter.hpp"
 #include <iostream>
 #include <cmath>
 #include <muParser.h>
@@ -49,7 +48,7 @@ class ExactSolutionParser {
     public:
         ExactSolutionParser() : is_defined(false) {}
         
-        ExactSolutionParser(const std::string& expr) : is_defined(true), expr(expr) {}
+        ExactSolutionParser(const std::string& expr) : expr(expr), is_defined(true) {}
         
         double operator()(double x, double y) const {
             if (!is_defined) return 0.0;
@@ -104,10 +103,6 @@ int main(int argc, char** argv) {
             exact_parser = std::make_shared<ExactSolutionParser>();
         }
         
-        // Test parsers
-        double test_val = (*forcing_parser)(0.5, 0.5);
-        std::cout << "Forcing term f(0.5, 0.5) = " << test_val << std::endl;
-        
     } catch (mu::Parser::exception_type &e) {
         std::cerr << "Parser error: " << e.GetMsg() << std::endl;
         return 1;
@@ -123,7 +118,7 @@ int main(int argc, char** argv) {
     };
 
     // Create solver
-    JacobiSerial solver(n, forcing_func, tolerance, max_iter);
+    JacobiSerial solver(forcing_func, tolerance, max_iter, n);
 
     // Solve
     auto start_time = std::chrono::high_resolution_clock::now();
@@ -146,10 +141,11 @@ int main(int argc, char** argv) {
         std::cout << "L2 error: " << l2_error << std::endl;
     }
 
-    // Export to VTK
+    /* Export to VTK
     std::string filename = "solution_serial_n" + std::to_string(n) + ".vtk";
-    VTKWriter::write(filename, n, solver.get_h(), solver.get_solution());
+    VTKWriter::write(filename, solver.n, solver.h, solver.get_solution());
     std::cout << "Solution written to " << filename << std::endl;
-
+    */
+   
     return 0;
 }

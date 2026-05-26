@@ -1,43 +1,23 @@
-CXX = mpic++
-CXX_SERIAL = g++
-CXXFLAGS = -std=c++17 -O3 -Wall -fopenmp -Iinclude -lmuparser
-CXXFLAGS_SERIAL = -std=c++17 -O3 -Wall -Iinclude
-LDFLAGS = -fopenmp -lmuparser
-LDFLAGS_SERIAL = -lmuparser
+CXX = g++
+CXXFLAGS = -std=c++17 -O3 -Wall -Iinclude
+LDFLAGS = -lmuparser
 
-SRC_DIR = src
-OBJ_DIR = obj
-INC_DIR = include
+TARGET = jacobi_serial
+SOURCES = src/main_serial.cpp src/JacobiSerial.cpp
+OBJECTS = $(SOURCES:src/%.cpp=obj/%.o)
 
-# Parallel sources
-SOURCES = $(filter-out $(SRC_DIR)/main_serial.cpp, $(wildcard $(SRC_DIR)/*.cpp))
-OBJECTS = $(SOURCES:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
-
-# Serial sources
-SOURCES_SERIAL = $(SRC_DIR)/main_serial.cpp $(SRC_DIR)/JacobiSerial.cpp
-OBJECTS_SERIAL = $(SOURCES_SERIAL:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%_serial.o)
-
-TARGET = jacobi_solver
-TARGET_SERIAL = jacobi_serial
-
-all: $(TARGET) $(TARGET_SERIAL)
+all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(CXX) $(LDFLAGS) -o $@ $^
+	$(CXX) -o $@ $^ $(LDFLAGS)
 
-$(TARGET_SERIAL): $(OBJECTS_SERIAL)
-	$(CXX_SERIAL) $(LDFLAGS_SERIAL) -o $@ $^
+obj/%.o: src/%.cpp | obj
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) -c -o $@ $
-
-$(OBJ_DIR)/%_serial.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
-	$(CXX_SERIAL) $(CXXFLAGS_SERIAL) -c -o $@ $
-
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+obj:
+	mkdir -p obj
 
 clean:
-	rm -rf $(OBJ_DIR) $(TARGET) $(TARGET_SERIAL)
+	rm -rf obj $(TARGET)
 
 .PHONY: all clean

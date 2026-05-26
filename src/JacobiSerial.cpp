@@ -5,8 +5,8 @@
 /**
  * @brief Constructor: initializes grid and allocates memory
  */
-JacobiSerial::JacobiSerial(int n, Function f, double tol, int max_iter)
-    : n(n), h(1.0 / (n - 1)), tolerance(tol), max_iterations(max_iter), forcing_term(f) {
+JacobiSerial::JacobiSerial(Function f, double tol, int max_iter, int n) : 
+    forcing_term(f), tolerance(tol), max_iterations(max_iter), n(n), h(1.0 / (n - 1)) {
     U.resize(n * n, 0.0);
     U_new.resize(n * n, 0.0);
     initialize_boundary_conditions();
@@ -70,10 +70,6 @@ double JacobiSerial::compute_error() const {
  * @return Number of iterations performed.
  */
 int JacobiSerial::solve() {
-    std::cout << "Starting serial Jacobi solver..." << std::endl;
-    std::cout << "Grid size: " << n << " x " << n << std::endl;
-    std::cout << "Tolerance: " << tolerance << std::endl;
-
     for (int iter = 0; iter < max_iterations; ++iter) {
         iterate();
 
