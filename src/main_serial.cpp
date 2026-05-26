@@ -1,4 +1,5 @@
 #include "JacobiSerial.hpp"
+#include "VTKWriter.hpp"
 #include <iostream>
 #include <cmath>
 #include <muParser.h>
@@ -141,11 +142,10 @@ int main(int argc, char** argv) {
         std::cout << "L2 error: " << l2_error << std::endl;
     }
 
-    /* Export to VTK
+    // Export to VTK
     std::string filename = "solution_serial_n" + std::to_string(n) + ".vtk";
     VTKWriter::write(filename, solver.n, solver.h, solver.get_solution());
     std::cout << "Solution written to " << filename << std::endl;
-    */
    
     return 0;
 }
