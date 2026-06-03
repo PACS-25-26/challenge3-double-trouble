@@ -112,6 +112,8 @@ int JacobiSolver::solve() {
 
     for (int iter = 0; iter < max_iterations; ++iter) {
 
+        iterate();
+        
         if (iter % 10 == 0) {
             double local_error = compute_local_error();
             if (check_global_convergence(local_error, iter)) {
