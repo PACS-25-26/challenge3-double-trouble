@@ -22,7 +22,7 @@ echo "Starting parallelization test"
 for n in "${GRID_SIZES[@]}"; do
     for np in "${MPI_PROCS[@]}"; do
         echo "Running parallel: n=$n, MPI processes=$np"
-        OUTPUT=$(mpirun -np $np $SOLVER $n "$FORCING" "$EXACT" 2>&1 | head -20)
+        OUTPUT=$(mpirun -np $np --map-by slot $SOLVER $n "$FORCING" "$EXACT" 2>&1 | head -20)        
         TIME=$(echo "$OUTPUT"  | grep "Time:"       | awk '{print $2}')
         ITERS=$(echo "$OUTPUT" | grep "Iterations:" | awk '{print $2}')
         L2=$(echo "$OUTPUT"    | grep "L2 error:"   | awk '{print $3}')
