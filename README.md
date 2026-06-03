@@ -54,7 +54,7 @@ mpirun -np <nproc> ./jacobi_parallel <n> "<forcing_term>" ["<exact_solution>"]
  
 - `<n>` -> grid size (n × n points)
 - `<forcing_term>` -> forcing function f(x, y) as a string (supported variables: `x`, `y`; constant: `pi`)
-- `<exact_solution>` -> used to compute the L2 error. This is optional, if the user doesn't know the exact solution it can be ommited, tha code run anyway but without computing the L2 error
+- `<exact_solution>` -> used to compute the L2 error. This parameter is optional. If the user does not know the exact solution it can be omitted, the code will still run but the L2 error will not be computed
 **Example:**
  
 ```bash
