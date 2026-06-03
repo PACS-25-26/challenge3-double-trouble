@@ -95,11 +95,10 @@ void MPIGrid::exchange_boundaries() {
  */
 void MPIGrid::gather_solution(std::vector<double>& global_solution) {
     if (rank == 0) {
-        global_solution.resize(n * n
+        global_solution.resize(n * n);
 
-);
         // Copy rank 0's data
-        for (int i = 0; i <= local_rows; ++i) {
+        for (int i = 0; i < local_rows + 2; ++i) {
             for (int j = 0; j < n; ++j) {
                 global_solution[i * n + j] = u_local[i * n + j];
             }

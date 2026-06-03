@@ -23,7 +23,7 @@ public:
     
     void iterate();
     double compute_local_error() const;
-    bool check_global_convergence(double local_error, int iteration);
+    bool check_global_convergence(double local_error);
     int solve();
     double compute_l2_error(std::function<double(double, double)> exact_solution) const;
 };
