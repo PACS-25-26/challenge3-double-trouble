@@ -93,4 +93,4 @@ Tests run with f(x,y) = 8π²sin(2πx)sin(2πy), exact solution u(x,y) = sin(2π
 | 128 |           |            |             |             |          |
 | 256 |           |            |             |             |          |
  
-> Full discussion of results in [`RESULT.md`](RESULT.md). Hardware details in [`test/hw.info`](test/hw.info).
+> Full discussion of results in [`RESULT.md`](RESULT.md). Hardware details in [`test/hw.info`](test/hw.info). ???? anche no??? bho
