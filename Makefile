@@ -1,7 +1,7 @@
 CXX = mpic++
 CXX_SERIAL = g++
-CXXFLAGS = -std=c++17 -O3 -Wall -fopenmp -Iinclude
-CXXFLAGS_SERIAL = -std=c++17 -O3 -Wall -Iinclude
+CXXFLAGS = -std=c++17 -O3 -Wall -fopenmp -Iinclude -MMD -MP
+CXXFLAGS_SERIAL = -std=c++17 -O3 -Wall -Iinclude -MMD -MP
 LDFLAGS = -fopenmp -lmuparser
 LDFLAGS_SERIAL = -lmuparser
 
@@ -41,3 +41,6 @@ clean:
 	rm -rf $(OBJ_DIR) $(TARGET) $(TARGET_SERIAL)
 
 .PHONY: all clean
+
+-include $(OBJECTS:.o=.d)
+-include $(OBJECTS_SERIAL:.o=.d)
