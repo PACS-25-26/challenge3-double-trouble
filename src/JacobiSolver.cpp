@@ -9,8 +9,6 @@
  * @param f Forcing term function f(x, y)
  * @param tol Convergence tolerance
  * @param max_iter Maximum number of iterations
- * @param rank MPI rank
- * @param size Total MPI processes
  */
 JacobiSolver::JacobiSolver(MPIGrid& grid, 
                            Function f,
@@ -23,7 +21,7 @@ JacobiSolver::JacobiSolver(MPIGrid& grid,
  * @brief Perform one Jacobi iteration
  * 
  * Updates each internal node following the rule:
- * U^(k+1)(i,j) = (1/4h²) * [U^(k)(i-1,j) + U^(k)(i+1,j) + U^(k)(i,j-1) + U^(k)(i,j+1) + h²*f(i,j)]
+ * U^(k+1)(i,j) = (1/4) * [U^(k)(i-1,j) + U^(k)(i+1,j) + U^(k)(i,j-1) + U^(k)(i,j+1) + h²*f(i,j)]
  */
 void JacobiSolver::iterate() {
     const int n = grid.n;
@@ -87,10 +85,9 @@ double JacobiSolver::compute_local_error() const {
 /**
  * @brief Check global convergence across all processes
  * @param local_error Local error from this process
- * @param iteration Current iteration number
  * @return true if converged globally, false otherwise
  */
-bool JacobiSolver::check_global_convergence(double local_error, int iteration) {
+bool JacobiSolver::check_global_convergence(double local_error) {
     double global_error;
     double local_error_sq = local_error * local_error;
     double global_error_sq;
@@ -112,11 +109,12 @@ int JacobiSolver::solve() {
 
     for (int iter = 0; iter < max_iterations; ++iter) {
 
+        grid.exchange_boundaries();
         iterate();
         
         if (iter % 10 == 0) {
             double local_error = compute_local_error();
-            if (check_global_convergence(local_error, iter)) {
+            if (check_global_convergence(local_error)) {
                 if (grid.rank == 0) {
                     std::cout << "Converged in " << iter << " iterations!" << std::endl;
                 }

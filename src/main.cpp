@@ -18,24 +18,24 @@ private:
 public:
     ForcingTermParser(const std::string& expr) : expr(expr) {}
     
-		double operator()(double x, double y) const {
-			  thread_local mu::Parser parser;
-			  thread_local double x_val = 0.0;
-			  thread_local double y_val = 0.0;
-			  thread_local bool initialized = false;
-			
-			  if (!initialized) {
-			      parser.DefineVar("x", &x_val);
-			      parser.DefineVar("y", &y_val);
-			      parser.DefineConst("pi", M_PI);
-			      parser.SetExpr(expr);
-			      initialized = true;
-			  }
-			
-			  x_val = x;
-			  y_val = y;
-			  return parser.Eval();
-		}
+    double operator()(double x, double y) const {
+        thread_local mu::Parser parser;
+        thread_local double x_val = 0.0;
+        thread_local double y_val = 0.0;
+        thread_local bool initialized = false;
+    
+        if (!initialized) {
+            parser.DefineVar("x", &x_val);
+            parser.DefineVar("y", &y_val);
+            parser.DefineConst("pi", M_PI);
+            parser.SetExpr(expr);
+            initialized = true;
+        }
+    
+        x_val = x;
+        y_val = y;
+        return parser.Eval();
+    }
 };
 
 /**
@@ -58,21 +58,21 @@ public:
 		    }
 		    
         thread_local mu::Parser parser;
-			  thread_local double x_val = 0.0;
-			  thread_local double y_val = 0.0;
-			  thread_local bool initialized = false;
+        thread_local double x_val = 0.0;
+        thread_local double y_val = 0.0;
+        thread_local bool initialized = false;
 			
-			  if (!initialized) {
-			      parser.DefineVar("x", &x_val);
-			      parser.DefineVar("y", &y_val);
-			      parser.DefineConst("pi", M_PI);
-			      parser.SetExpr(expr);
-			      initialized = true;
-			  }
+        if (!initialized) {
+            parser.DefineVar("x", &x_val);
+            parser.DefineVar("y", &y_val);
+            parser.DefineConst("pi", M_PI);
+            parser.SetExpr(expr);
+            initialized = true;
+        }
 			
-			  x_val = x;
-			  y_val = y;
-			  return parser.Eval();
+        x_val = x;
+        y_val = y;
+        return parser.Eval();
     }
     
     bool defined() const { return is_defined; }
@@ -101,6 +101,12 @@ int main(int argc, char** argv) {
 		}
 
     int n = std::atoi(argv[1]);
+    if (n < 2) {
+        if (rank == 0)
+            std::cerr << "Error: n must be >= 2" << std::endl;
+        MPI_Finalize();
+        return 1;
+    }
     std::string forcing_expr = argv[2];
     std::string exact_expr = (argc > 3) ? argv[3] : "";
 
