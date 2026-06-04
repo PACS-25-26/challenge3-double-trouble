@@ -77,8 +77,8 @@ class ExactSolutionParser {
 
 int main(int argc, char** argv) {
     // Fixed parameters
-    const double tolerance = 1e-6;
-    const int max_iter = 100000;
+    const double tolerance = 1e-7;
+    const int max_iter = 1e6;
 
     // Parse command line arguments
     if (argc < 3) {

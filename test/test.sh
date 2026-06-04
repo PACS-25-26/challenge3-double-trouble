@@ -5,7 +5,7 @@ SOLVER_SERIAL="./jacobi_serial"
 OUTPUT_DIR="test/data"
 RESULTS_FILE="$OUTPUT_DIR/results.csv"
 GRID_SIZES=(16 32 64 128 256)
-MPI_PROCS=(2 4)
+MPI_PROCS=(2 4 8)
 FORCING="8*pi^2*sin(2*pi*x)*sin(2*pi*y)"
 EXACT="sin(2*pi*x)*sin(2*pi*y)"
 
@@ -48,9 +48,9 @@ for n in "${GRID_SIZES[@]}"; do
         echo "Running parallel: n=$n, MPI processes=$np"
         OUTPUT=$(mpirun -np "$np" --map-by slot "$SOLVER" "$n" "$FORCING" "$EXACT" 2>&1 | head -20)
 
-        TIME=$(echo "$OUTPUT"  | grep "Time:"       | awk '{print $2}')
-        ITERS=$(echo "$OUTPUT" | grep "Iterations:" | awk '{print $2}')
-        L2=$(echo "$OUTPUT"    | grep "L2 error:"   | awk '{print $3}')
+        TIME=$(echo "$OUTPUT"  | grep -m 1 "Time:"       | awk '{print $2}')
+        ITERS=$(echo "$OUTPUT" | grep -m 1 "Iterations:" | awk '{print $2}')
+        L2=$(echo "$OUTPUT"    | grep -m 1 "L2 error:"   | awk '{print $3}')
 
         if [ -z "$TIME" ]; then
             echo "  Warning: no output for n=$n, np=$np"
