@@ -45,6 +45,7 @@ echo ""
 echo "--- Parallel ---"
 for n in "${GRID_SIZES[@]}"; do
     for np in "${MPI_PROCS[@]}"; do
+        export OMP_NUM_THREADS=$((8 / np))
         echo "Running parallel: n=$n, MPI processes=$np"
         OUTPUT=$(mpirun -np "$np" --map-by slot "$SOLVER" "$n" "$FORCING" "$EXACT" 2>&1 | head -20)
 
