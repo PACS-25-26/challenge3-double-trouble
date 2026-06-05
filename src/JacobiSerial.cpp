@@ -27,7 +27,7 @@ void JacobiSerial::initialize_boundary_conditions() {
 }
 
 /**
- * @brief Perform one Jacobi iteration over all interior points.
+ * @brief Perform one Jacobi iteration over all interior points
  */
 void JacobiSerial::iterate() {
     double h2 = h * h;
@@ -50,7 +50,7 @@ void JacobiSerial::iterate() {
 }
 
 /**
- * @brief Compute L2 error between current and previous solution.
+ * @brief Compute L2 error between current and previous solution
  */
 double JacobiSerial::compute_error() const {
     double error_sq = 0.0;
@@ -66,8 +66,8 @@ double JacobiSerial::compute_error() const {
 }
 
 /**
- * @brief Main solve loop.
- * @return Number of iterations performed.
+ * @brief Main solve loop
+ * @return Number of iterations performed
  */
 int JacobiSerial::solve() {
     for (int iter = 0; iter < max_iterations; ++iter) {
@@ -86,7 +86,7 @@ int JacobiSerial::solve() {
 }
 
 /**
- * @brief Compute L2 error against exact solution.
+ * @brief Compute L2 error wrt exact solution
  */
 double JacobiSerial::compute_l2_error(Function exact_solution) const {
     double error_sq = 0.0;

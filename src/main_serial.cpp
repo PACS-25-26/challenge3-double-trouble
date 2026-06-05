@@ -39,7 +39,7 @@ class ForcingTermParser {
 
 /**
  * @brief Exact solution wrapper
- * The user can specify the exact solution to compute the L2 error
+ * The user can specify the exact solution to compute the L2 error (not mandatory)
  */
 class ExactSolutionParser {
     private:

@@ -62,7 +62,7 @@ void MPIGrid::initialize_boundary_conditions() {
 }
 
 /**
- * @brief Exchange common rows with neighboring MPI ranks.
+ * @brief Exchange common rows with neighboring MPI ranks
  * 
  * Sends the first internal row to rank - 1 and receives its last internal row.
  * Sends the last internal row to rank + 1 and receives its first internal row.

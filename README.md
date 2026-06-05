@@ -21,11 +21,11 @@ A hybrid MPI/OpenMP C++ implementation of the Jacobi iteration method to solve t
 │   └── main.cpp               # Entry point for the parallel solver
 ├── test/
 │   ├── test.sh                # Automated parallelization test script
+|   ├── RESULTS.md
 │   └── data/
 │       └── results.csv        # Test output
 ├── Makefile
-├── README.md
-└── RESULT.md
+└── README.md
 ```
  
 ---
